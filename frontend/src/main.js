@@ -1,7 +1,7 @@
 import './assets/main.css'
 import './assets/common.css'
 
-import { createApp, provide, readonly } from 'vue'
+import { createApp, provide } from 'vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
@@ -24,11 +24,8 @@ const vuetify = createVuetify({
 
 const app = createApp(App)
 
-// app.config.globalProperties.$axios = axios;  //전역변수로 설정 컴포넌트에서 this.$axios 호출할 수 있음
-// app.config.globalProperties.$serverUrl = '//localhost:8081' //api server
-
 // Axios를 전역으로 제공
-app.provide('axios', readonly(axios))
+app.provide('axios', axios)
 app.provide('serverUrl', serverUrl)
 
 app.use(createPinia())

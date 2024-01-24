@@ -1,44 +1,49 @@
 <template>
-  <v-container class="board-list">
-    <v-row class="common-buttons">
-      <v-btn rounded color="blue-grey" @click="fnWrite">글쓰기</v-btn>
+  <v-container>
+    <!-- 검색 기능 -->
+    <v-row class="mb-3">
+      <v-col cols="12" sm="6" md="4">
+        <v-text-field
+          v-model="keyword"
+          label="검색"
+          solo-inverted
+          hide-details
+          dense
+          clearable
+          @input="fnGetList"
+        ></v-text-field>
+      </v-col>
     </v-row>
 
-    <!-- 게시판 리스트 테이블 -->
-    <v-table fixed-header>
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>제목</th>
-          <th>작성자</th>
-          <th>등록일시</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(row, idx) in list" :key="idx">
-          <td>{{ row.idx }}</td>
-          <td><a @click="fnView(row.idx)">{{ row.title }}</a></td>
-          <td>{{ row.author }}</td>
-          <td>{{ row.created_at }}</td>
-        </tr>
-      </tbody>
-    </v-table>
+    <!-- 게시글 리스트 테이블 -->
+    <v-data-table
+      :headers="[
+        { text: '번호', value: 'idx' },
+        { text: '제목', value: 'title' },
+        { text: '작성자', value: 'author' },
+        { text: '작성일', value: 'createdAt' }
+      ]"
+      :items="list"
+      :items-per-page="size"
+      class="elevation-1"
+      @click:row="fnView"
+    >
+      <template v-slot:[`item.createdAt`]="{ item }">
+        {{ new Date(item.createdAt).toLocaleDateString() }}
+      </template>
+    </v-data-table>
 
     <!-- 페이지네이션 -->
-    <!-- <: &lt; >: &gt; -->
-    <!-- 페이지에 표시할 내용이 있을 때만 페이징 컴포넌트를 표시 -->
-    <!-- <v-pagination v-if="paging.total_list_cnt &gt; 0" v-model="page" :length="paging.total_page_cnt" @input="fnPage"></v-pagination> -->
-    
-    <!-- <v-pagination 
-      v-if="paging.total_list_cnt &gt; 0" 
-      v-model="paging.page" 
-      :length="paging.total_page_cnt" 
-      :total-visible="5" 
+    <v-pagination
+      v-model="page"
+      :length="Math.ceil(paging.total_list_cnt / size)"
       @input="fnPage"
-    ></v-pagination> -->
-    
-  </v-container>
+      circle
+    ></v-pagination>
 
+    <!-- 글쓰기 버튼 -->
+    <v-btn color="primary" @click="fnWrite">글쓰기</v-btn>
+  </v-container>
 </template>
 
 <script setup>
@@ -99,8 +104,6 @@ const fnGetList = async () => {
     })
 
     state.list = response.data
-    // console.log("Total List Count:", state.paging.total_list_cnt);
-
   } catch (err) {
     if (err.message.indexOf('Network Error') > -1) {
       alert('네트워크가 원활하지 않습니다. \n잠시 후 다시 시도해주십시오.')
@@ -114,27 +117,14 @@ onMounted(fnGetList)
 // 게시글 등록 함수
 const fnWrite = () => {
   // 등록 버튼 클릭 시 실행될 로직
-  route.push({
-    path: './write'
-  })
-
 }
 
 const fnView = (idx) => {
   // 제목 클릭 시 실행될 로직, idx 사용
-  state.requestBody.idx = idx
-  route.push({
-    path: './detail',
-    query: state.requestBody
-  })
 }
 
 const fnPage = (n) => {
   // 페이지 번호 클릭 시 실행될 로직, 페이지 번호 n 사용
-  if (page.value !== n) {
-    page.value = n;
-    fnGetList();
-  }
 }
 
 // toRefs를 사용하여 reactive 객체의 속성을 분해
