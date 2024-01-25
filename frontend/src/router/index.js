@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 // import BoardList from '../views/board/BoardList.vue'
-import B from '../views/board/B.vue'
+// import Bbb from '../views/board/Bbb.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,13 +22,18 @@ const router = createRouter({
     {
       path: '/board/list',
       name: 'BoardList',
-      component: () => import('../views/board/BoardList.vue') 
+      component: () => import(/* webpackChunkName: "BoardList" */ '../views/board/BoardList.vue') 
       // component: BoardList
     },
+    {
+      path: '/board/detail',
+      name: 'BoardDetail', 
+      component: () => import(/* webpackChunkName: "BoardList" */ '../views/board/BoardDetail.vue')
+    },
     // {
-    //   path: '/b',
-    //   name: 'b', 
-    //   component: B
+    //   path: '/board/bbb',
+    //   name: 'Bbb',
+    //   component: Bbb
     // }
   ]
 })

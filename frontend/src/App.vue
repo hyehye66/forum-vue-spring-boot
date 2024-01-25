@@ -13,7 +13,7 @@ import PageFooter from '@/components/PageFooter.vue'
   <PageFooter />
 </template>
 
-<style scoped>
+<style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -35,7 +35,7 @@ import PageFooter from '@/components/PageFooter.vue'
   color: #42b983;
 }
 
-/* header {
+header {
   line-height: 1.5;
   max-height: 100vh;
 }
@@ -56,7 +56,7 @@ nav a.router-link-exact-active {
   color: var(--color-text);
 }
 
-nav a.router-link-exact-active:hover {
+/* nav a.router-link-exact-active:hover {
   background-color: transparent;
 }
 
