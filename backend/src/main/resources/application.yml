@@ -1,6 +1,11 @@
 server:
   port: 8081
 
+logging:
+  level:
+    root: INFO
+    org.springframework: DEBUG
+
 spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
@@ -22,3 +27,5 @@ spring:
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb
+
+

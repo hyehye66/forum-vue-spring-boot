@@ -6,15 +6,15 @@
       <v-btn @click="fnList()">목록</v-btn>
     </v-row>
     <v-col class="board-contents">
-      <h3>{{ title }}</h3>
-      <p>
-        <strong>{{ author }}</strong>
+      <h3>{{ state.title }}</h3>
+      <div>
+        <strong>{{ state.author }}</strong>
         <br>
-        <span>{{ created_at }}</span>
-      </p>
+        <span>{{ state.created_at }}</span>
+      </div>
     </v-col>
     <v-col class="board-contents">
-      <span>{{ contents }}</span>
+      <span>{{ state.contents }}</span>
     </v-col>
     <v-row class="common-buttons">
       <v-btn @click="fnUpdate()">수정</v-btn>&nbsp;
@@ -25,13 +25,13 @@
 </template>
 
 <script setup>
-import { inject, onMounted } from 'vue'
+import { reactive, inject, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
 const axios = inject('axios')
-const serveUrl = inject('serverUrl')
+const serverUrl = inject('serverUrl')
 
 const state = reactive({
   requestBody: route.query,
@@ -45,15 +45,24 @@ const state = reactive({
 
 const fnGetView = async () => {
   try {
-    const response = await axios.get(`${serverUrl}` + '/board/' + state.idx, {
+    const response = await axios.get(`${serverUrl}/board/${state.idx}`, {
     params: state.requestBody
     })
+
+    console.log(response)
+
     state.title = response.data.title
     state.author = response.data.author
     state.contents = response.data.contents
     state.created_at = response.data.created_at
 
+    console.log(state.title)
+    console.log(state.author)
+    console.log(state.contents)
+    console.log(state.created_at)
+
   } catch (err) {
+    console.log(err.message)
     if (err.message.indexOf('Network Error') > -1) {
       alert('네트워크가 원활하지 않습니다. \n잠시 후 다시 시도해주십시오.')
     }
@@ -76,18 +85,18 @@ const fnUpdate = () => {
 }
 
 const fnDelete = () => {
-  try {
-    if (!confirm("삭제하시겠습니까?")) return
+  if (!confirm("삭제하시겠습니까?")) return
 
-    axios.delete(serverUrl + '/board/' + state.idx, {})
+  try {
+    axios.delete(`${serverUrl}/board/${state.idx}`)
     alert("삭제되었습니다.")
     fnList()
 
   } catch (err) {
     console.log(err)
   }
-
 }
+
 onMounted(fnGetView)
 </script>
 
