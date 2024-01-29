@@ -49,17 +49,12 @@ const fnGetView = async () => {
     params: state.requestBody
     })
 
-    console.log(response)
+    // console.log(response)
 
     state.title = response.data.title
     state.author = response.data.author
     state.contents = response.data.contents
     state.created_at = response.data.created_at
-
-    console.log(state.title)
-    console.log(state.author)
-    console.log(state.contents)
-    console.log(state.created_at)
 
   } catch (err) {
     console.log(err.message)

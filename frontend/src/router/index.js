@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-// import BoardList from '../views/board/BoardList.vue'
+import BoardWrite from '../views/board/BoardWrite.vue'
 // import Bbb from '../views/board/Bbb.vue'
 
 const router = createRouter({
@@ -29,6 +29,11 @@ const router = createRouter({
       path: '/board/detail',
       name: 'BoardDetail', 
       component: () => import(/* webpackChunkName: "BoardList" */ '../views/board/BoardDetail.vue')
+    },
+    {
+      path: '/board/write',
+      name: 'BoardWrite',
+      component: BoardWrite
     },
     // {
     //   path: '/board/bbb',
