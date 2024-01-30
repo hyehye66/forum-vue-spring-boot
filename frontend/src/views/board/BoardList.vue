@@ -1,11 +1,19 @@
 <template>
   <v-container class="board-list">
+    <!-- <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field> -->
     <v-row class="common-buttons">
       <v-btn rounded color="blue-grey" @click="fnWrite">글쓰기</v-btn>
     </v-row>
 
     <!-- 게시판 리스트 테이블 -->
-    <v-data-table :headers="tableHeaders" :items="list" fixed-header>      
+    <v-data-table :headers="tableHeaders" :items="list" class="elevation-1" fixed-header>
+      <!-- :search="search" hide-actions v-model:pagination="pagination" -->
       <!-- <template v-slot:header>
         <tr>
           <th>No</th>
@@ -25,6 +33,9 @@
     </v-data-table>
 
     <!-- 페이지네이션 -->
+    <!-- <div class="text-xs-center pt-2">
+      <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+    </div> -->
     <!-- <: &lt; >: &gt; -->
     <!-- 페이지에 표시할 내용이 있을 때만 페이징 컴포넌트를 표시 -->    
     <!-- <v-pagination 
@@ -40,7 +51,7 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, computed, toRefs, inject } from 'vue'
+import { ref, reactive, onMounted, computed, toRefs, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 // useRoute를 사용하여 현재 라우트의 쿼리 파라미터에 접근
@@ -50,6 +61,10 @@ const router = useRouter()
 // 루트 인스턴스에서 제공된 axios와 serverUrl 주입
 const axios = inject('axios')
 const serverUrl = inject('serverUrl')
+
+// const search = ref('')
+// const pagination = ref({})
+// const selected = ref([])
 
 // 반응형 데이터 정의
 const state = reactive({
@@ -139,6 +154,13 @@ const fnView = (idx) => {
   })
 }
 
+// const pages = () => {
+//   if (pagination.rowsPerPage == null || pagination.totalItems == null) {
+//     return 0
+//   }
+//   return Math.ceil(pagination.totalItems/pagination.rowsPerPage)
+// }
+
 // const fnPage = (n) => {
 //   // 페이지 번호 클릭 시 실행될 로직, 페이지 번호 n 사용
 //   if (state.page !== n) {
@@ -155,5 +177,16 @@ const { list, no, paging, page, size, keyword } = toRefs(state)
 </script>
 
 <style scoped>
+.common-buttons {
+  display: flex;
+  justify-content: right;
+  padding: 1.3rem;
+  
+}
+
+.v-pagination__list {
+  border: solid;
+}
+
 
 </style>

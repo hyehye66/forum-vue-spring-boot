@@ -17,4 +17,11 @@ img {
   display: flex;
   justify-content: center;
 }
+
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
 </style>
