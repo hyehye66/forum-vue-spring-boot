@@ -99,9 +99,7 @@ const fnSave = () => {
     'author': author.value
   };
   // console.log(idx.value);
-  // console.log(title.value);
-  // console.log(author.value);
-  // console.log(contents.value);
+
   if (idx.value === undefined) {
     // INSERT
     axios.post(apiUrl, form).then((res) => {
