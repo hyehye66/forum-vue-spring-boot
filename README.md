@@ -1,5 +1,18 @@
 # To create a forum project with vue & spring boot
 
+## 구현 기능
+
+- 기술 스택
+  - Frontend: Vue.js
+  - Backend: Spring boot
+- 게시판 생성
+- 글 작성, 조회 가능
+- 게시글 CRUD 구현
+
+
+
+## 결과
+
 #### [게시판]
 
 ![](README.assets/게시판목록.gif)
