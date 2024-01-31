@@ -33,15 +33,6 @@ const title = ref('')
 const author = ref('')
 const contents = ref('')
 const created_at = ref('')
-// const state = reactive({
-//   requestBody: route.query,
-//   idx: route.query.idx,
-
-//   title: '',
-//   author: '',
-//   contents: '',
-//   created_at: ''
-// })
 
 const fnGetView = () => {
   if (idx.value !== undefined) {
@@ -57,20 +48,6 @@ const fnGetView = () => {
     });
   }
 };
-// const fnGetView = async() => {
-//   try{
-//     const response = await axios.get(`${serverUrl}/board/${state.idx}`, {
-//       params: state.requestBody
-//     })
-
-//     state.title = response.data.title
-//     state.author = response.data.author
-//     state.contents = response.data.contents
-//     state.created_at = response.data.created_at
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
 
 onMounted(fnGetView);
 

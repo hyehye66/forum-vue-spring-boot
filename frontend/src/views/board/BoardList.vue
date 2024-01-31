@@ -51,7 +51,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed, toRefs, inject } from 'vue'
+import { reactive, onMounted, computed, toRefs, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 // useRoute를 사용하여 현재 라우트의 쿼리 파라미터에 접근
@@ -72,21 +72,10 @@ const state = reactive({
   list: [], // 리스트 데이터
   no: '', // 게시판 숫자 처리
   paging: {
-    // block: 0,
-    // end_page: 0,
-    // next_block: 0,
     page: 0,
-    // page_size: 0,
-    // prev_block: 0,
-    // start_index: 0,
-    // start_page: 0,
-    // total_block_cnt: 0,
     total_list_cnt: 0,
     total_page_cnt: 0,
   }, // 페이징 데이터
-  page: route.query.page || 1, // 현재 페이지 번호
-  size: route.query.size || 10, // 페이지당 게시글 수
-  keyword: route.query.keyword, // 검색 키워드
 })
 
 // 테이블 헤더 정의
@@ -96,16 +85,6 @@ const tableHeaders = [
   { text: 'Author', value: 'author' },
   { text: 'Created at', value: 'created_at' }
 ]
-
-// 페이지 번호 계산
-// const paginavigation = computed(() => {
-//   const pageNumber = []
-//   const { start_page, end_page } = state.paging
-//   for (let i = start_page; i <= end_page; i++) {
-//     pageNumber.push(i)
-//   }
-//   return pageNumber
-// })
 
 // 리스트 데이터를 가져오는 함수
 const fnGetList = async () => {
@@ -119,12 +98,8 @@ const fnGetList = async () => {
     const response = await axios.get(`${serverUrl}/board/list`, {
       params: state.requestBody
     })
-
-    // console.log(response.data)
     state.list = response.data
-    // state.list = response.data.list
-    // state.paging = response.data.paging
-    // console.log("Total List Count:", state.paging.total_list_cnt);
+
 
   } catch (err) {
     if (err.message.indexOf('Network Error') > -1) {
